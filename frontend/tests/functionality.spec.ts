@@ -481,9 +481,11 @@ test('CRUD模块：筛选、导出、登记、动作、指标全链路', async (
   page.on('response', r => { if (r.url().includes('/api/') && r.status()>=400) browserErrors.push(`${r.status()} ${r.url()}`) })
   if (crudModules.length === 0) { test.skip(); return }
 
+  // 代理池的列表接口是分页结构 { items, total, page, size }，也要按 items 渲染。
+  const bodyRows = page.locator('tbody tr[data-testid^="row-"]')
+
   for (const mod of crudModules) {
     await page.goto(`/${mod.key}`)
-    const bodyRows = page.locator('tbody tr[data-testid^="row-"]')
     await expect(bodyRows).toHaveCount(3)
     const firstValue = await bodyRows.nth(0).locator('td').nth(0).innerText()
 

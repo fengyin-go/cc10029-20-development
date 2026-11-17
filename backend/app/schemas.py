@@ -13,6 +13,8 @@ class PageResult(BaseModel, Generic[T]):
     total: int
     page: int = 1
     size: int = 20
+    # 列表之外的附加统计（如可用代理数据集的批次绑定与冲突数），不影响既有分页契约。
+    summary: dict[str, Any] | None = None
 
 
 class ActionResult(BaseModel):

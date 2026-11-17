@@ -23,7 +23,8 @@ class CrawlerService:
             end = (today + timedelta(days=3 - i)).isoformat()
             items.append({
                 "id": int(row.get("id", i + 1)),
-                "name": str(row.get(list(row.keys())[1] if len(row) > 1 else "name", "")),
+                "任务编号": str(row.get("任务编号", "")),
+                "name": str(row.get("任务名称", "") or row.get(list(row.keys())[1] if len(row) > 1 else "name", "")),
                 "start": start,
                 "end": end,
                 "status": str(row.get("status", STATUS_ORDER[i % len(STATUS_ORDER)])),
